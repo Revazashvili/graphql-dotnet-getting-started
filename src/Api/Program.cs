@@ -26,9 +26,6 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 app.UseGraphQL<ISchema>();
-app.UseGraphQLPlayground(new PlaygroundOptions
-{
-    SchemaPollingEnabled = false
-});
+app.UseGraphQLPlayground();
 
 await app.RunAsync();
