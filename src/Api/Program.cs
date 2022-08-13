@@ -4,7 +4,6 @@ using Api.Schema;
 using GraphQL;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
-using GraphQL.Server.Ui.Playground;
 using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using Refit;

@@ -1,3 +1,3 @@
 namespace Api;
 
-public record Post(int Id,string Title,string Body,int UserId);
+public record Post(int Id, string Title, string Body, int UserId);

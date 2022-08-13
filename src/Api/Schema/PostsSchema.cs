@@ -1,8 +1,6 @@
 namespace Api.Schema;
 
-using GraphQL.Types;
-
-public class PostsSchema : Schema
+public class PostsSchema : GraphQL.Types.Schema
 {
     public PostsSchema(IServiceProvider serviceProvider) : base(serviceProvider)
     {
