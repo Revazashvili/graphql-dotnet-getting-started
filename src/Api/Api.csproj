@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-<!--    <PackageReference Include="GraphQL" Version="5.3.3" />-->
+    <PackageReference Include="Refit" Version="6.3.2" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="6.1.1" />
     <PackageReference Include="GraphQL.MicrosoftDI" Version="5.3.3" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="6.1.1" />
