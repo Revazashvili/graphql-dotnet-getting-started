@@ -1,33 +1,28 @@
+using System.Reflection;
+using Api.Schema;
+using GraphQL;
+using GraphQL.MicrosoftDI;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.SystemTextJson;
+using GraphQL.Types;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddGraphQL(b => b
+    .AddHttpMiddleware<ISchema>()
+    .AddSchema<PostsSchema>()
+    .AddGraphTypes(Assembly.GetExecutingAssembly())
+    .AddSystemTextJson());
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseHttpsRedirection();
-
-var summaries = new[]
+app.UseGraphQL<ISchema>();
+app.UseGraphQLPlayground(new PlaygroundOptions
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    SchemaPollingEnabled = false
+});
 
-app.MapGet("/weathers", () => Enumerable.Range(1, 5).Select(index =>
-            new WeatherForecast
-            (
-                DateTime.Now.AddDays(index),
-                Random.Shared.Next(-20, 55),
-                summaries[Random.Shared.Next(summaries.Length)]
-            ))
-        .ToArray())
-    .WithName("GetWeatherForecast");
-
-app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+await app.RunAsync();
