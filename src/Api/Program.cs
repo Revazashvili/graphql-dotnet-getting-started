@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGraphQL(b => b
     .AddHttpMiddleware<ISchema>()
     .AddSchema<PostsSchema>()
+    .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = builder.Environment.IsDevelopment())
     .AddGraphTypes(Assembly.GetExecutingAssembly())
     .AddSystemTextJson());
 
