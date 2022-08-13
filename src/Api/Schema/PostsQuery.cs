@@ -5,16 +5,15 @@ namespace Api.Schema;
 
 public class PostsQuery : ObjectGraphType<object>
 {
-    public PostsQuery()
+    public PostsQuery(IPostsClient postsClient)
     {
         Name = nameof(PostsQuery);
         
-        FieldDelegate<ListGraphType<StringGraphType>>("userNames",
-            resolve: new Func<IResolveFieldContext, IEnumerable<string>>(context => new[]
-            {
-                "1",
-                "2",
-                "3"
-            }));
+        FieldAsync<ListGraphType<AutoRegisteringObjectGraphType<Post>>>("posts",
+            resolve: async _ => await postsClient.GetAsync());
+        
+        FieldAsync<AutoRegisteringObjectGraphType<Post>>("post",
+            arguments:new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+            resolve: async context => await postsClient.GetByIdAsync(context.GetArgument<int>("id")));
     }
 }
