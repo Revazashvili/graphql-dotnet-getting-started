@@ -5,16 +5,13 @@ namespace Api.Schema;
 
 public class PostsMutation : ObjectGraphType
 {
-    public PostsMutation()
+    public PostsMutation(IPostsClient postsClient)
     {
         Name = nameof(PostsMutation);
-        
-        FieldDelegate<ListGraphType<StringGraphType>>("userNames",
-            resolve: new Func<IResolveFieldContext, IEnumerable<string>>(context => new[]
-            {
-                "1",
-                "2",
-                "3"
-            }));
+
+        FieldAsync<AutoRegisteringObjectGraphType<Post>>("insert",
+            arguments: new QueryArguments(
+                new QueryArgument<PostInput> { Name = "post" }),
+            resolve: async context => await postsClient.InsertAsync(context.GetArgument<Post>("post")));
     }
 }
