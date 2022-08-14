@@ -20,8 +20,6 @@ builder.Services.AddGraphQL(b => b
 builder.Services.AddRefitClient<IPostsClient>()
     .ConfigureHttpClient(httpClient => httpClient.BaseAddress = new Uri("https://jsonplaceholder.typicode.com"));
 
-builder.Services.AddHttpContextAccessor();
-
 var app = builder.Build();
 
 app.UseGraphQL<ISchema>();
