@@ -1,3 +1,4 @@
+using Api.Schema;
 using Refit;
 
 namespace Api;
@@ -11,5 +12,5 @@ public interface IPostsClient
     Task<Post> GetByIdAsync(int id);
 
     [Post("/posts")]
-    Task<Post> InsertAsync([Body] Post post);
+    Task<Post> InsertAsync([Body] PostInput post);
 }

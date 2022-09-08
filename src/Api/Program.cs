@@ -1,4 +1,3 @@
-using System.Reflection;
 using Api;
 using Api.Schema;
 using GraphQL;
@@ -18,7 +17,6 @@ builder.Services.AddRefitClient<IPostsClient>()
 var app = builder.Build();
 
 app.UseGraphQL();
-app.UseDeveloperExceptionPage();
 app.UseGraphQLPlayground();
 
 await app.RunAsync();
