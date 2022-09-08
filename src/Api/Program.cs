@@ -2,16 +2,11 @@ using System.Reflection;
 using Api;
 using Api.Schema;
 using GraphQL;
-using GraphQL.MicrosoftDI;
-using GraphQL.Server;
-using GraphQL.SystemTextJson;
-using GraphQL.Types;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGraphQL(b => b
-    .AddHttpMiddleware<ISchema>()
     .AddSchema<PostsSchema>()
     .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = builder.Environment.IsDevelopment())
     .AddGraphTypes(Assembly.GetExecutingAssembly())
@@ -22,7 +17,8 @@ builder.Services.AddRefitClient<IPostsClient>()
 
 var app = builder.Build();
 
-app.UseGraphQL<ISchema>();
+app.UseGraphQL();
+app.UseDeveloperExceptionPage();
 app.UseGraphQLPlayground();
 
 await app.RunAsync();
