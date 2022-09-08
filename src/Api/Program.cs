@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGraphQL(b => b
     .AddSchema<PostsSchema>()
     .AddAutoClrMappings()
-    .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = builder.Environment.IsDevelopment())
+    .AddErrorInfoProvider(options => options.ExposeExceptionDetails = builder.Environment.IsDevelopment())
     .AddSystemTextJson());
 
 builder.Services.AddRefitClient<IPostsClient>()
