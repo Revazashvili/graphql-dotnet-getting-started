@@ -1,21 +1,9 @@
 using GraphQL;
-using GraphQL.Types;
 
 namespace Api.Schema;
 
 public class PostsQuery
 {
-    // public PostsQuery(IPostsClient postsClient)
-    // {
-    //     Name = nameof(PostsQuery);
-    //
-    //     FieldAsync<ListGraphType<AutoRegisteringObjectGraphType<Post>>>("posts",
-    //         resolve: async _ => await postsClient.GetAsync());
-    //
-    //     FieldAsync<AutoRegisteringObjectGraphType<Post>>("post",
-    //         arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
-    //         resolve: async context => await postsClient.GetByIdAsync(context.GetArgument<int>("id")));
-    // }
-    
-    public static string Hero() => "Luke Skywalker";
+    public static Task<IEnumerable<Post>> Posts([FromServices]IPostsClient postsClient) => postsClient.GetAsync();
+    public static Task<Post> Post([FromServices]IPostsClient postsClient,int id) => postsClient.GetByIdAsync(id);
 }
