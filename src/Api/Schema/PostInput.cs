@@ -1,11 +1,7 @@
-using GraphQL.Types;
-
 namespace Api.Schema;
 
-public class PostInput : AutoRegisteringInputObjectGraphType<Post>
+public record PostInput(int Id, string Title, string Body, int UserId)
 {
-    public PostInput()
-    {
-        Name = "PostInput";
-    }
+    public static implicit operator Post(PostInput postInput) =>
+        new Post(postInput.Id, postInput.Title, postInput.Body, postInput.UserId);
 }
